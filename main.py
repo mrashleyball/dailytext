@@ -38,7 +38,11 @@ def main():
     results = soup.find(id='dailyText') # elements = results.find_all('div', id='dailyText')
     
     # Match days date with daily text
-    days_results = results.find('div', attrs={'data-date': f'{year}-0{month}-0{day}T00:00:00.000Z'})
+    if month < 10:
+        month = '0'+str(month)
+    if day < 10:
+        day = '0'+str(day)
+    days_results = results.find('div', attrs={'data-date': f'{year}-{month}-{day}T00:00:00.000Z'})
     
     days_date = days_results.header.h2.get_text()
     days_quote = days_results.p.em.get_text()

@@ -21,7 +21,7 @@ day = current_date.day
 #     p = results.find("p")
 # print(f"H1: {h1.text}, H2: {h2.text}, P: {p.text}") #.get_text()
 
-print(year, month, day)
+print(f'https://year, month, day)
 
 # job_elements = results
 
