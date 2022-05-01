@@ -57,8 +57,7 @@ f'''{days_date}
         
 {days_paragraph}
         
-URL: {URL} 
-    ''')
+URL: {URL}''')
     # print(days_results)
 
 main()
