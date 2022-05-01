@@ -1,26 +1,60 @@
 #! python3
-# Daily Text
 
-# Open
+##############################
+#
+# DAILY TEXT
+# 
+##############################
 
-import webbrowser, requests
+# To Do
+# 1 Proof of concept
+# 2 Get working with WOL
+# 3 Make Discord Bot
+
+##############################
+# START OF PROGRAM
+
+import requests, datetime
 from bs4 import BeautifulSoup
 
-URL = 'https://wol.jw.org/en/wol/h/r1/lp-e/2022/5/1'
-page = requests.get(URL)
+def main():
+    
+    # Get's current date
+    current_date = datetime.datetime.now()
+    year = current_date.year
+    month = current_date.month
+    day = current_date.day
 
-soup = BeautifulSoup(page.content, "html.parser")
+    # Passes current date to make daily URL
+    URL = (f'https://wol.jw.org/en/wol/h/r1/lp-e/{year}/{month}/{day})') # URL = (f'https://wol.jw.org/en/wol/h/r1/lp-e/2022/5/2)')
+    
+    # Passes URL to page
+    page = requests.get(URL)
 
-results = soup.find(id="dailyText")
-# print(results.prettify())
+    # Grabs page content and passes to soup
+    soup = BeautifulSoup(page.content, 'html.parser')
 
-job_elements = results.find_all("div", id="dailyText")
+    # Searches soup for the Daily Text
+    results = soup.find(id='dailyText') # elements = results.find_all('div', id='dailyText')
+    
+    # Match days date with daily text
+    days_results = results.find('div', attrs={'data-date': f'{year}-0{month}-0{day}T00:00:00.000Z'})
+    
+    days_date = days_results.header.h2.get_text()
+    days_quote = days_results.p.em.get_text()
+    days_scripture = days_results.p.a.em.get_text()
+    days_paragraph = days_results.find('div', class_='bodyTxt').get_text().strip()
 
-for job_element in job_elements:
-    text_date = job_element.find("h2", class_="p88")
-    # text_scripture = job_element.find("p", class_="p3")
-    # location_element = job_element.find("p", class_="p4")
-    # print(text_date)
-    # print(text_scripture)
-    # print(location_element)
-    print()
+    # Display daily text
+    print(
+f'''{days_date}
+
+{days_quote}{days_scripture}
+        
+{days_paragraph}
+        
+URL: {URL} 
+    ''')
+    # print(days_results)
+
+main()
