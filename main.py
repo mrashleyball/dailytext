@@ -65,7 +65,7 @@ async def on_ready():
 async def on_message(message):
   if message.author == client.user:
     return
-  if message.content.startswith('$dailytext'):
+  if message.content.startswith('!dailytext'):
     the_days_text = dailytext()
     await message.channel.send(the_days_text)
 
