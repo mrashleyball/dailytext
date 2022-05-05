@@ -14,7 +14,7 @@ month = current_date.month
 day = current_date.day
 
 # Passes current date to make daily URL
-URL = (f'https://wol.jw.org/en/wol/h/r1/lp-e/{year}/{month}/{day})') # URL = (f'https://wol.jw.org/en/wol/h/r1/lp-e/2022/5/2)')
+URL = (f'https://wol.jw.org/en/wol/h/r1/lp-e/{year}/{month}/{day}') # URL = (f'https://wol.jw.org/en/wol/h/r1/lp-e/2022/5/2)')
 
 # Passes URL to page
 page = requests.get(URL)
