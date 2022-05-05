@@ -25,25 +25,18 @@ soup = BeautifulSoup(page.content, 'html.parser')
 # Searches soup for the Daily Text
 results = soup.find(id='dailyText') # elements = results.find_all('div', id='dailyText')
 
-# Match days date with daily text
+# Add extra '0' to either month or day if needed
 if month < 10:
     month = '0'+str(month)
 if day < 10:
     day = '0'+str(day)
+# Match the days date with daily text
 days_results = results.find('div', attrs={'data-date': f'{year}-{month}-{day}T00:00:00.000Z'})
 
+# Extract text for the Date, Quote, Scripture and Paragraph from WOL based on HTML syntax
 days_date = days_results.header.h2.get_text()
-days_quote = days_results.p.em.get_text()
-days_scripture = days_results.p.a.em.get_text()
+days_quote = days_results.find('p', class_='themeScrp').get_text()
 days_paragraph = days_results.find('div', class_='bodyTxt').get_text().strip()
 
 # Display daily text
-print(
-f'''{days_date}
-
-{days_quote}{days_scripture}
-    
-{days_paragraph}
-    
-URL: {URL}''')
-# print(days_results)
+print(days_date,'\n',days_quote,'\n', days_paragraph, '\n', 'URL:', URL, sep='')
