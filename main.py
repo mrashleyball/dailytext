@@ -5,11 +5,14 @@
 # Repo: https://github.com/mrashleyball/dailytext
 # Hosted: https://replit.com/@mrashleyball/dailytext
 
-import requests, datetime
+import requests, datetime, pytz
 from bs4 import BeautifulSoup
 
-# Get's current date
-current_date = datetime.datetime.now()
+# Get AEST timezone
+AEST = pytz.timezone('Australia/Brisbane')
+
+# Get's current date, ensure AEST is used
+current_date = datetime.datetime.now(AEST)
 year = current_date.year
 month = current_date.month
 day = current_date.day
