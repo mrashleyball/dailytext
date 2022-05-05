@@ -52,7 +52,7 @@ def dailytext():
   # Display all elements that make the daily text including new lines, the link and disclaimer message
   days_text = days_date, days_quote, days_paragraph, URL, disclaimer
 
-  return str(days_text)
+  return str(days_text).replace('\\xa',' ').replace('\\u', '')
 
 client = discord.Client()
 my_secret = os.environ['token']
