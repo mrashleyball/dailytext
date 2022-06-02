@@ -6,6 +6,7 @@
 # Hosted: https://replit.com/@mrashleyball/dailytext
 
 import requests, datetime, pytz
+import discord
 import os
 from bs4 import BeautifulSoup
 
@@ -51,6 +52,21 @@ def dailytext():
   # Display all elements that make the daily text including new lines, the link and disclaimer message
   days_text = days_date, days_quote, days_paragraph, URL, disclaimer
 
-  print(str(days_text).replace('\\xa',' ').replace('\\u', ''))
+  return str(days_text).replace('\\xa',' ').replace('\\u', '')
 
-dailytext()
+client = discord.Client()
+my_secret = os.environ['token']
+
+@client.event
+async def on_ready():
+  print('We\'ve logged in as {0.user}'.format(client))
+
+@client.event
+async def on_message(message):
+  if message.author == client.user:
+    return
+  if message.content.startswith('!dailytext'):
+    the_days_text = dailytext()
+    await message.channel.send(the_days_text)
+
+client.run(os.environ['token'])
